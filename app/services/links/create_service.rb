@@ -1,12 +1,8 @@
 module Links
   class CreateService < BaseService
-    def initialize(params)
-      @url = params[:url]
-      @generator = params[:generator] || ShortUrlGenerator
-      @domain = params[:domain] || ENV['DOMAIN_URL_SHORTENER']
-    end
-
-    attr_reader :url, :generator, :domain
+    option :url
+    option :generator, default: -> { ShortUrlGenerator }
+    option :domain, default: -> { ENV['DOMAIN_URL_SHORTENER'] }
 
     def call
       begin

@@ -1,11 +1,9 @@
 module Links
   class GetForRedirectionService < BaseService
-    def initialize(params)
-      @short_url = params[:short_url]
-      @ip = params[:ip]
-    end
+    option :short_url
+    option :ip
 
-    attr_reader :short_url, :ip, :link
+    attr_reader :link
 
     def call
       @link = Link.find_by_short_url(short_url)
