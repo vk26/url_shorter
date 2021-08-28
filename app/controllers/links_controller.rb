@@ -1,8 +1,6 @@
 class LinksController < ApplicationController
-  def create
-    result = Links::CreateService.new(
-      url: link_params[:url]
-    ).call
+  def create    
+    result = Links::CreateService.new(url: params[:url]).call
 
     if result.success?
       render json: { data: result.success }, status: :created
@@ -11,9 +9,17 @@ class LinksController < ApplicationController
     end
   end
 
-  private
-
-  def link_params
-    params.permit(:url)
+  def redirect
+    result = Links::GetForRedirectionService.new(
+      short_url: params[:short_url],
+      ip: request.remote_ip
+    ).call
+    
+    if result.success?
+      redirect_to result.success.url
+    else
+      render json: { errors: "Url with short url #{params[:short_url]} is not found" }, status: :not_found
+    end
   end
+
 end

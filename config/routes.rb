@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  post :url, to: 'links#create'
+  post :urls, to: 'links#create'
+
+  get 'urls/:short_url', to: 'links#redirect'
 end

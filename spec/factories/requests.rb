@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :request do
-    link { nil }
-    ip { "MyString" }
+    link
+    ip { '120.120.120.120' }
   end
 end
