@@ -14,6 +14,10 @@ RSpec.describe Links::CreateService do
     let(:params) { { url: 'https://example.com', generator: generator_stub } }
 
     it { is_expected.to be_success }
+
+    it 'return short_url with domain of service' do
+      expect(subject.success).to eq 'http://localhost:3000/urls/abc'
+    end
     
     it 'create link with url and generated short_url' do
       subject

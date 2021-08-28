@@ -14,8 +14,8 @@ RSpec.describe 'LinksController', type: :request do
         expect(response).to have_http_status :created
       end
       
-      it 'return short url' do
-        expect(resp_data).to include('short_url')
+      it 'return short url with domain' do
+        expect(resp_data).to match /(http|https).+\/urls\/\w{3,}/
       end
       
       it 'create link' do

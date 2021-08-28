@@ -3,9 +3,10 @@ module Links
     def initialize(params)
       @url = params[:url]
       @generator = params[:generator] || ShortUrlGenerator
+      @domain = params[:domain] || ENV['DOMAIN_URL_SHORTENER']
     end
 
-    attr_reader :url, :generator
+    attr_reader :url, :generator, :domain
 
     def call
       begin
@@ -17,13 +18,17 @@ module Links
         return Failure(link.errors)        
       end
 
-      Success(link)
+      Success(prepare_short_url(link.short_url))
     end
 
     private
 
     def new_short_url
       generator.run
+    end
+
+    def prepare_short_url(short_url)
+      "#{domain}/urls/#{short_url}"
     end
   end
 end
