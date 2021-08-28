@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_28_101830) do
+ActiveRecord::Schema.define(version: 2021_08_28_194230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2021_08_28_101830) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["link_id", "ip"], name: "index_requests_on_link_id_and_ip"
-    t.index ["link_id"], name: "index_requests_on_link_id"
   end
 
   add_foreign_key "requests", "links"
