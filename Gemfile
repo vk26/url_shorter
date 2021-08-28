@@ -7,6 +7,11 @@ gem 'rails', '~> 6.0.3'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
 
+# dry stuff:
+gem 'dry-initializer'
+gem 'dry-schema'
+gem 'dry-monads'
+
 gem 'validate_url'
 
 gem 'bootsnap', '>= 1.4.2', require: false
