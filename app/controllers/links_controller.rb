@@ -1,9 +1,9 @@
 class LinksController < ApplicationController
-  def create    
+  def create 
     result = Links::CreateService.new(url: params[:url]).call
 
     if result.success?
-      render json: { data: result.success }, status: :created
+      render json: { data: { short_url: result.success } }, status: :created
     else
       render json: { errors: result.failure }, status: :bad_request
     end
