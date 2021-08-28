@@ -22,4 +22,12 @@ class LinksController < ApplicationController
     end
   end
 
+  def stats
+    link = Link.find_by_short_url(params[:short_url])
+    if link
+      render json: { data: link.stats }
+    else
+      render json: { errors: "Url with short url #{params[:short_url]} is not found" }, status: :not_found
+    end
+  end
 end

@@ -65,4 +65,38 @@ RSpec.describe 'LinksController', type: :request do
       end
     end
   end
+
+  describe 'GET /urls/:short_url/stats' do
+    context 'when link is existed by short url' do
+      let!(:link) { create(:link, short_url: 'abcd') }
+      let(:short_url) { 'abcd' }
+
+      before do
+        create(:request, link: link, ip: '100.100.100.100')
+        create(:request, link: link, ip: '120.120.120.120')
+
+        get "/urls/#{short_url}/stats"
+      end
+
+      it 'return count of requests by link' do
+        expect(resp_data).to include(
+          'count_uniq_redirections' => 2
+        )
+      end
+    end
+
+    context 'when link is not existed by short url' do
+      let!(:another_link) { create(:link, short_url: 'another_short_url') }
+      let(:short_url) { 'abcd' }
+      before do
+        create(:request, link: another_link, ip: '100.100.100.100')
+
+        get "/urls/#{short_url}/stats"
+      end
+
+      it 'return status not_found' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
 end
