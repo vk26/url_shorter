@@ -1,24 +1,45 @@
-# README
+# URL shorter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Yet another URL-shorter service like bit.ly, etc.
 
-Things you may want to cover:
+## Setup and run
+Change db-connection settings:
+```bash
+cp .env.development.sample .env.development
+cp .env.test.sample .env.test
 
-* Ruby version
+rails db:create && rails db:migrate
+rails s
+```
 
-* System dependencies
+Run tests:
+```
+rspec spec
+```
 
-* Configuration
+## Usage
 
-* Database creation
+Get short-link:
+```json
+curl -H "Content-Type: application/json" -X POST \
+  -d '{"url":"https://api.rubyonrails.org/"}' \
+  http://localhost:3000/urls
 
-* Database initialization
+{"data":{"short_url":"http://localhost:3000/urls/YPkoxZg"}}
+```
 
-* How to run the test suite
+Redirect by short-link (try in browser or via shell):
+```json
+curl -i http://localhost:3000/urls/YPkoxZg
 
-* Services (job queues, cache servers, search engines, etc.)
+HTTP/1.1 302 Found
+Location: https://api.rubyonrails.org/
+...
+```
 
-* Deployment instructions
+Get stats:
+```json
+curl http://localhost:3000/urls/YPkoxZg/stats
 
-* ...
+{"data":{"count_uniq_redirections":1}}
+```
